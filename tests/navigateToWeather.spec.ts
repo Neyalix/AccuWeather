@@ -1,7 +1,6 @@
 import { test } from "@playwright/test";
 import { DataAcumulatingPage } from "../page-objects/dataAcumulatingPage";
 import { HelperBase } from "../page-objects/helperBase";
-import { HourlyPage} from "../page-objects/hourlyPage"
 import { NavigationPage } from "../page-objects/navigationPage";
 import { WeatherForTodayPage } from "../page-objects/todaysWeatherPage";
 
@@ -16,7 +15,7 @@ test.describe("Accumulate Data", () => {
     await waitForRequest.waitForPrivacySettingsConfirmation();
     await waitForRequest.waitForRequestFromAdvertWebsiteAndBlockIt();
   });
-  test("Get the actual data for Current Weather from Tab - Today", async ({page}) => {
+  test("Get the actual data for Current Weather from Tab - Today, navigate to Sofia", async ({page}) => {
     
     const navigateTo = new NavigationPage(page);
     const weatherForToday = new WeatherForTodayPage(page)
@@ -36,14 +35,13 @@ test.describe("Bonus Task", () => {
     await waitForRequest.waitForPrivacySettingsConfirmation();
     await waitForRequest.waitForRequestFromAdvertWebsiteAndBlockIt();
   });
-  test("Collect hourly params", async ({ page }) => {
-    const navigateToHourly = new HourlyPage(page);    
+  test("Collect hourly params from Sofia", async ({ page }) => {  
     const navigateTo = new NavigationPage(page);
     const weatherInformation = new DataAcumulatingPage(page);
 
-    navigateTo.navigateToDesiredLocationForWeatherInformation("London");
+    navigateTo.navigateToDesiredLocationForWeatherInformation("Sofia");
 
-    await navigateToHourly.navigateToHourlyPage();
+    await navigateTo.navigateToHourlyPage();
     const weatherInfo2 =
       await weatherInformation.combinedAllAcumulatedData(page);
     const avTemp =

@@ -25,37 +25,51 @@ export class DataAcumulatingPage {
       ".hourly-detailed-card-header  .phrase",
     );
   }
-
+/**
+ * Method which locates the hour in the hourly banner
+ * @returns the hour
+ */
   async collectHoursOfTheDayRemaining() {
-    // const leftHours = this.page.locator('.hourly-card-subcontaint .date')
     await this.hourseOfTheDay.first().waitFor({ state: "visible" });
     return this.hourseOfTheDay;
   }
-
+/**
+ * collect the temperature for the given hour
+ * @returns the temp
+ */
   async collectTemperatureForEachHour() {
-    // const temps = this.page.locator('.temp')
     await this.tempOfTheDay.first().waitFor({ state: "visible" });
     return this.tempOfTheDay;
   }
-
+/**
+ * Collects the ait quality per hour
+ * @returns the air quality
+ */
   async collectAirQualityForEachHour() {
-    // const airQualityInfoPerHour = this.page.locator('.hourly-detailed-card-header .panel').getByText('Air Quality').locator('.value')
     await this.airQualityOfTheDay.first().waitFor({ state: "visible" });
     return this.airQualityOfTheDay;
   }
-
+/**
+ * Collects the win info for the hour
+ * @returns the wind condition
+ */
   async collectTheWindInfoForEachHour() {
-    // const windInfoPerHour = this.page.locator('.hourly-detailed-card-header .panel').getByText('Wind').locator('.value')
     await this.windOfTheDay.first().waitFor({ state: "visible" });
     return this.windOfTheDay;
   }
-
+/**
+ * Collects weather condition per hour
+ * @returns ewather condition
+ */
   async gatherTheWeatherConditionForEachHour() {
-    // const weatherCondition = this.page.locator('.hourly-detailed-card-header  .phrase')
     await this.weatherOfTheDay.first().waitFor({ state: "visible" });
     return this.weatherOfTheDay;
   }
-
+/**
+ * 
+ * @param page This Method collect all the elements from the locators and stores them in a collection
+ * @returns collection of arrays for each category for the rest of the day
+ */
   async combinedAllAcumulatedData(page: Page) {
     const leftHours = await this.collectHoursOfTheDayRemaining();
     const airQualityInfoPerHour = await this.collectAirQualityForEachHour();
@@ -82,6 +96,11 @@ export class DataAcumulatingPage {
     }
     return weatherData;
   }
+/**
+ * 
+ * @param weatherData Exportonly the temperature from the collection, replace the char and parse it into a number
+ * @returns average temperature for the day
+ */
   async takeAverageTemperatureFromTheHourlyTemperature(weatherData: any[]) {
     let total = 0;
     let count = weatherData.length;
