@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { DataAcumulatingPage } from "../page-objects/dataAcumulatingPage";
+import { DataAcumulatingPage } from "../page-objects/hourlyDataAcumulatingPage";
 import { HelperBase } from "../page-objects/helperBase";
 import { NavigationPage } from "../page-objects/navigationPage";
 import { WeatherForTodayPage } from "../page-objects/todaysWeatherPage";
