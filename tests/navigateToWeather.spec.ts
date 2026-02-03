@@ -1,8 +1,10 @@
 import { test } from "@playwright/test";
 import { DataAcumulatingPage } from "../page-objects/dataAcumulatingPage";
 import { HelperBase } from "../page-objects/helperBase";
+import { HourlyPage} from "../page-objects/hourlyPage"
+import { NavigationPage } from "../page-objects/navigationPage";
 import { WeatherForTodayPage } from "../page-objects/todaysWeatherPage";
-import { PageManager } from "../page-objects/pageManager";
+
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://www.accuweather.com/");
@@ -11,25 +13,16 @@ test.beforeEach(async ({ page }) => {
 test.describe("Accumulate Data", () => {
   test.beforeEach(async ({ page }) => {
     const waitForRequest = new HelperBase(page);
-
     await waitForRequest.waitForPrivacySettingsConfirmation();
     await waitForRequest.waitForRequestFromAdvertWebsiteAndBlockIt();
   });
-  test("Get the actual data for Current Weather from Tab - Today", async ({
-    page,
-  }) => {
-    const pm = new PageManager(page);
-    await pm
-      .navigateTo()
-      .navigateToDesiredLocationForWeatherInformation("Sofia");
-    // const navigateTo = new NavigationPage(page);
-    // const weatherForToday = new WeatherForTodayPage(page)
-    await pm.weatherForToday().gatherWeatherInformationForToday();
+  test("Get the actual data for Current Weather from Tab - Today", async ({page}) => {
+    
+    const navigateTo = new NavigationPage(page);
+    const weatherForToday = new WeatherForTodayPage(page)
 
-    // await navigateTo.navigateToDesiredLocationForWeatherInformation("Sofia");
-    const todaysWeather = await pm
-      .weatherForToday()
-      .gatherWeatherInformationForToday();
+    await navigateTo.navigateToDesiredLocationForWeatherInformation("Sofia");
+    const todaysWeather = await weatherForToday.gatherWeatherInformationForToday()
 
     const managedWeatherData = todaysWeather.join("\n");
     console.log(managedWeatherData);
@@ -44,18 +37,13 @@ test.describe("Bonus Task", () => {
     await waitForRequest.waitForRequestFromAdvertWebsiteAndBlockIt();
   });
   test("Collect hourly params", async ({ page }) => {
-    const pm = new PageManager(page);
-    await pm
-      .navigateTo()
-      .navigateToDesiredLocationForWeatherInformation("Sofia");
-    await pm.navigateTo().navigateToHourlyPage();
-    // const navigateTo = new NavigationPage(page);
-    // const navigateToHourly = new HourlyPage(page);
+    const navigateToHourly = new HourlyPage(page);    
+    const navigateTo = new NavigationPage(page);
     const weatherInformation = new DataAcumulatingPage(page);
 
-    // navigateTo.navigateToDesiredLocationForWeatherInformation("London");
+    navigateTo.navigateToDesiredLocationForWeatherInformation("London");
 
-    // await navigateToHourly.navigateToHourlyPage();
+    await navigateToHourly.navigateToHourlyPage();
     const weatherInfo2 =
       await weatherInformation.combinedAllAcumulatedData(page);
     const avTemp =

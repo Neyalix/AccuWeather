@@ -1,9 +1,8 @@
 import { Locator, Page } from "@playwright/test";
-import { count } from "node:console";
-import { PageManager } from "./pageManager";
 
-export class DataAcumulatingPage extends PageManager {
-  
+
+export class DataAcumulatingPage {
+  readonly page: Page
   readonly hourseOfTheDay: Locator;
   readonly tempOfTheDay: Locator;
   readonly airQualityOfTheDay: Locator;
@@ -11,7 +10,7 @@ export class DataAcumulatingPage extends PageManager {
   readonly weatherOfTheDay: Locator;
 
   constructor(page: Page) {
-    super(page)
+    this.page = page
     this.hourseOfTheDay = page.locator(".hourly-card-subcontaint .date");
     this.tempOfTheDay = page.locator(".temp");
     this.airQualityOfTheDay = page
