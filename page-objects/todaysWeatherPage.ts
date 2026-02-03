@@ -1,11 +1,10 @@
 import { Page } from "@playwright/test";
-import { PageManager } from "./pageManager";
 
-export class WeatherForTodayPage extends PageManager {
-  
+export class WeatherForTodayPage {
+  readonly page :Page
 
   constructor(page: Page) {
-    super(page)
+    this.page = page
   }
 /**
  * 

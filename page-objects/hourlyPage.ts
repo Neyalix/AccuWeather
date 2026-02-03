@@ -1,10 +1,11 @@
 import { Page } from "@playwright/test";
-import { PageManager } from "./pageManager.ts";
 
-export class HourlyPage extends PageManager {
+export class HourlyPage {
+  
+  readonly page: Page
 
   constructor(page: Page) {
-    super(page);
+    this.page = page;
   }
 
   async navigateToHourlyPage() {
