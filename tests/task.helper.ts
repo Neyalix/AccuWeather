@@ -25,7 +25,7 @@ export async function acumulateDataForToday(page:Page) {
         const windSpeedElement = page.locator('//*[@class="value"]')
         const windSpeed = await windSpeedElement.nth(1).textContent()
         const airQualityElement = page.locator('//*[@class="value"]')
-        const airQuality = await airQualityElement.nth(3).textContent()
+        const airQuality = await airQualityElement.nth(2).textContent()
 
             return  [
            `Temperature: ${actualTemp}`,
