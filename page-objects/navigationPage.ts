@@ -6,7 +6,7 @@ export class NavigationPage {
   readonly hourlyTab: Locator
   constructor(page: Page) {
     this.page = page;
-    this.searchbarNav = page.locator('[class="search-input"]');
+    this.searchbarNav = page.locator('.search-input');
     this.hourlyTab = page.locator(".subnav-item");
   }
 /**
@@ -15,9 +15,8 @@ export class NavigationPage {
  * to show Weather information.
  */
   async navigateToDesiredLocationForWeatherInformation(city: string) {
-    
-    const searchBar = await this.searchbarNav.isVisible()
-    const fillInput = await this.searchbarNav.pressSequentially(city, { delay: 200 })
+    await this.searchbarNav.click()
+    await this.searchbarNav.type(city, {delay: 10})
     await this.page.locator(".search-bar-result .search-bar-result__long-name").getByText(city).first().click()
   }
 

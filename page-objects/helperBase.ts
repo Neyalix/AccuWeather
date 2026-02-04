@@ -27,7 +27,7 @@ export class HelperBase {
       const isMedia = url.endsWith(".mp4") || url.endsWith(".avi");
 
       if (isAd || isMedia) {
-        return url;
+        return route.abort();
       } else {
         route.continue();
       }

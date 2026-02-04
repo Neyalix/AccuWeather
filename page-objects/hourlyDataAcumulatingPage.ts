@@ -1,6 +1,12 @@
 import { Locator, Page } from "@playwright/test";
 
-
+export type HourWeather = {
+  hour: string;
+  temp: string;
+  air: string;
+  wind: string;
+  condition: string;
+}
 export class DataAcumulatingPage {
   readonly page: Page
   readonly hourseOfTheDay: Locator;
@@ -70,7 +76,7 @@ export class DataAcumulatingPage {
  * @param page This Method collect all the elements from the locators and stores them in a collection
  * @returns collection of arrays for each category for the rest of the day
  */
-  async combinedAllAcumulatedData(page: Page) {
+  async combinedAllAcumulatedData(): Promise<HourWeather[]> {
     const leftHours = await this.collectHoursOfTheDayRemaining();
     const airQualityInfoPerHour = await this.collectAirQualityForEachHour();
     const temps = await this.collectTemperatureForEachHour();
@@ -78,7 +84,7 @@ export class DataAcumulatingPage {
     const weatherCondition = await this.gatherTheWeatherConditionForEachHour();
     const count = await leftHours.count();
 
-    const weatherData = [];
+    const weatherData: HourWeather[] = [];
     for (let i = 0; i < count; i++) {
       const tempPerHour = await temps.nth(i).innerText();
       const hoursOfTheDay = await leftHours.nth(i).innerText();
@@ -101,12 +107,12 @@ export class DataAcumulatingPage {
  * @param weatherData Exportonly the temperature from the collection, replace the char and parse it into a number
  * @returns average temperature for the day
  */
-  async takeAverageTemperatureFromTheHourlyTemperature(weatherData: any[]) {
+  async takeAverageTemperatureFromTheHourlyTemperature(weatherData: HourWeather[]) {
     let total = 0;
     let count = weatherData.length;
     for (let t = 0; t < count; t++) {
       let tempString = weatherData[t].temp;
-      let cleanTempPerHourWithoutSymbols = Number(tempString.replace("°", ""));
+      let cleanTempPerHourWithoutSymbols = parseInt(tempString.replace(/[^\d-]/g, ""));
 
       total += cleanTempPerHourWithoutSymbols;
     }
