@@ -111,10 +111,7 @@ export class DataAcumulatingPage {
     let total = 0;
     let count = weatherData.length;
     for (let t = 0; t < count; t++) {
-      let tempString = weatherData[t].temp;
-      let cleanTempPerHourWithoutSymbols = parseInt(tempString.replace(/[^\d-]/g, ""));
-
-      total += cleanTempPerHourWithoutSymbols;
+      total += parseInt(weatherData[t].temp.replace(/[^\d-]/g, ""));
     }
     total /= count
     return total;

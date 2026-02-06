@@ -16,7 +16,7 @@ export class NavigationPage {
  */
   async navigateToDesiredLocationForWeatherInformation(city: string) {
     await this.searchbarNav.click()
-    await this.searchbarNav.type(city, {delay: 10})
+    await this.searchbarNav.pressSequentially(city, {delay: 10})
     await this.page.locator(".search-bar-result .search-bar-result__long-name").getByText(city).first().click()
   }
 
@@ -24,7 +24,7 @@ export class NavigationPage {
  * 
  * @param page With this method we navigate to the hourly tab once we are in Sofia
  */
-  async navigateToHourlyPage() {
-    const hourlyTab = await this.hourlyTab.getByText("hourly").click();
+  async toolbarNavitaion(tab: string) {
+    const hourlyTab = await this.hourlyTab.getByText(tab).click();
   }
 }

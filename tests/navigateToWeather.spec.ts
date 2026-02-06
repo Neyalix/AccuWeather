@@ -24,7 +24,6 @@ test.describe("Accumulate Data", () => {
     await expect(page).toHaveURL(/.*sofia.*/)
     const todaysWeather = await weatherForToday.gatherWeatherInformationForToday()
     expect(todaysWeather.length).toBeGreaterThan(0)
-    expect(todaysWeather[0]).not.toBeNull()
     const managedWeatherData = todaysWeather.join("\n");
     console.log(managedWeatherData);
   });
@@ -43,14 +42,14 @@ test.describe("Bonus Task", () => {
 
     navigateTo.navigateToDesiredLocationForWeatherInformation("Sofia");
 
-    await navigateTo.navigateToHourlyPage();
+    await navigateTo.toolbarNavitaion('hourly');
     await expect(page).toHaveURL(/.*hourly*./)
-    const weatherInfo2 =
+    const weatherInfo =
       await weatherInformation.combinedAllAcumulatedData();
     const avTemp =
-      await weatherInformation.takeAverageTemperatureFromTheHourlyTemperature(weatherInfo2);
+      await weatherInformation.takeAverageTemperatureFromTheHourlyTemperature(weatherInfo);
       expect(avTemp).not.toBeNaN();
-    console.table(weatherInfo2);
+    console.table(weatherInfo);
     console.log(
       `The average temperature for the rest of the day is: ${avTemp.toFixed(0)}°`,
     );

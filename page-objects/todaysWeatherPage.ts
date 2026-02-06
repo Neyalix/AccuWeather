@@ -1,10 +1,12 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class WeatherForTodayPage {
   readonly page :Page
+  readonly conditionElement: Locator
 
   constructor(page: Page) {
     this.page = page
+    this.conditionElement = this.page.locator('//*[@class="value"]');
   }
 /**
  * 
@@ -18,10 +20,8 @@ export class WeatherForTodayPage {
     const currentTime = await currentTimeElement.textContent();
     const actualTempElement = this.page.locator(".temp-container .temp");
     const actualTemp = await actualTempElement.textContent();
-    const windSpeedElement = this.page.locator('//*[@class="value"]');
-    const windSpeed = await windSpeedElement.nth(1).textContent();
-    const airQualityElement = this.page.locator('//*[@class="value"]');
-    const airQuality = await airQualityElement.nth(2).textContent();
+    const windSpeed = await this.conditionElement.nth(1).textContent();
+    const airQuality = await this.conditionElement.nth(2).textContent();
 
     const currentWeatherData = [
       `Temperature: ${actualTemp}`,
